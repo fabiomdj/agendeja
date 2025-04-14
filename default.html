@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Fluxograma Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .mermaid svg .node rect {
+            fill: #e6f3ff;
+            stroke: #2563eb;
+            stroke-width: 2px;
+            cursor: pointer;
+        }
+        .mermaid svg .node text {
+            fill: #1e40af;
+            font-weight: 500;
+        }
+        .mermaid svg .node:hover rect {
+            fill: #bfdbfe;
+        }
+        .mermaid svg .edgePath path {
+            stroke: #4b5563;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+    <header class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-gray-800">Fluxograma Interativo - AgendeJá</h1>
+        <p class="text-gray-600 mt-2">Clique nos nós para acessar as respectivas telas do sistema.</p>
+    </header>
+
+    <div class="mermaid w-full max-w-5xl">
+        graph TD
+            A[Login/Cadastro] -->|Usuário| B[Busca de Serviços]
+            A -->|Empresa| C[Cadastro de Empresa]
+            C --> D{Validação pela Equipe}
+            D -->|Aprovado| E[Configurar Serviços]
+            D -->|Rejeitado| F[Notificação de Rejeição]
+            B --> G[Agendamento]
+            G --> H[Gerenciar Agendamentos]
+            H -->|Confirmado pela Empresa| I[Confirmação]
+            H -->|Rejeitado| J[Notificação ao Usuário]
+
+            click A "login.html" "Acessar Tela de Login/Cadastro"
+            click B "busca-servicos.html" "Acessar Tela de Busca de Serviços"
+            click C "cadastro-empresa.html" "Acessar Tela de Cadastro de Empresa"
+            click E "servicos-empresa.html" "Acessar Tela de Configuração de Serviços"
+            click G "agendamento.html" "Acessar Tela de Agendamento"
+            click H "gerenciar-agendamentos.html" "Acessar Tela de Gerenciamento de Agendamentos"
+            click I "confirmacao.html" "Acessar Tela de Confirmação"
+    </div>
+
+    <script>
+        // Inicializa o Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                padding: 20,
+            },
+        });
+
+        // Adiciona interatividade aos nós após o Mermaid renderizar
+        document.addEventListener('DOMContentLoaded', () => {
+            const nodes = document.querySelectorAll('.mermaid svg .node');
+            nodes.forEach(node => {
+                node.addEventListener('click', (e) => {
+                    const label = node.querySelector('text').textContent.trim();
+                    const links = {
+                        'Login/Cadastro': 'login.html',
+                        'Busca de Serviços': 'busca-servicos.html',
+                        'Cadastro de Empresa': 'cadastro-empresa.html',
+                        'Configurar Serviços': 'servicos-empresa.html',
+                        'Agendamento': 'agendamento.html',
+                        'Gerenciar Agendamentos': 'gerenciar-agendamentos.html',
+                        'Confirmação': 'confirmacao.html',
+                    };
+                    if (links[label]) {
+                        window.location.href = links[label];
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Protótipo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Tela de Login/Cadastro -->
+    <section id="login" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-400">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center mb-6">AgendeJá</h1>
+            <div class="space-y-4">
+                <input type="email" placeholder="E-mail" class="w-full p-3 border rounded">
+                <input type="password" placeholder="Senha" class="w-full p-3 border rounded">
+                <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Entrar como Usuário</button>
+                <button class="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700">Entrar como Empresa</button>
+                <a href="#cadastro-usuario" class="block text-center text-blue-600 hover:underline">Cadastrar Usuário</a>
+                <a href="#cadastro-empresa" class="block text-center text-blue-600 hover:underline">Cadastrar Empresa</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Cadastro de Empresa -->
+    <section id="cadastro-empresa" class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+            <h2 class="text-2xl font-bold mb-6">Cadastro de Empresa</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Nome da Empresa" class="w-full p-3 border rounded">
+                <input type="text" placeholder="CNPJ" class="w-full p-3 border rounded">
+                <input type="text" placeholder="Endereço" class="w-full p-3 border rounded">
+                <input type="tel" placeholder="Telefone" class="w-full p-3 border rounded">
+                <input type="email" placeholder="E-mail" class="w-full p-3 border rounded">
+                <textarea placeholder="Descrição" class="w-full p-3 border rounded"></textarea>
+                <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Enviar para Validação</button>
+            </form>
+            <p class="text-sm text-gray-600 mt-4">Seu cadastro será revisado em até 48 horas.</p>
+        </div>
+    </section>
+
+    <!-- Tela de Configuração de Serviços (Empresa) -->
+    <section id="servicos-empresa" class="min-h-screen bg-gray-50 p-6">
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6">Configurar Serviços</h2>
+            <div class="space-y-4">
+                <div class="border p-4 rounded">
+                    <input type="text" placeholder="Nome do Serviço (ex.: Corte de Cabelo)" class="w-full p-2 mb-2 border rounded">
+                    <input type="text" placeholder="Duração (ex.: 30 min)" class="w-full p-2 mb-2 border rounded">
+                    <input type="text" placeholder="Preço (ex.: R$ 50,00)" class="w-full p-2 mb-2 border rounded">
+                    <textarea placeholder="Descrição" class="w-full p-2 border rounded"></textarea>
+                </div>
+                <button class="bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Adicionar Serviço</button>
+                <button class="bg-green-600 text-white p-3 rounded hover:bg-green-700">Salvar Alterações</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Busca de Serviços (Usuário) -->
+    <section id="busca-servicos" class="min-h-screen bg-gray-50 p-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Buscar Serviços</h2>
+                <select class="w-full p-3 border rounded mb-4">
+                    <option>Beleza</option>
+                    <option>Saúde</option>
+                    <option>Reparos</option>
+                </select>
+                <input type="range" min="1" max="50" value="10" class="w-full mb-4">
+                <p class="text-sm text-gray-600">Raio: 10 km</p>
+                <div class="h-64 bg-gray-200 rounded">Mapa (Placeholder)</div>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold">Salão Beleza Total</h3>
+                    <p class="text-sm text-gray-600">2 km de distância</p>
+                    <p>Serviços: Corte, Manicure, Tintura</p>
+                    <button class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Ver Serviços</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Agendamento (Usuário) -->
+    <section id="agendamento" class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6">Agendar Serviço</h2>
+            <div class="space-y-4">
+                <p><strong>Serviço:</strong> Corte de Cabelo (R$ 50,00, 30 min)</p>
+                <input type="date" class="w-full p-3 border rounded">
+                <select class="w-full p-3 border rounded">
+                    <option>10:00</option>
+                    <option>11:00</option>
+                    <option>14:00</option>
+                </select>
+                <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Confirmar Agendamento</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Gerenciamento de Agendamentos (Empresa) -->
+    <section id="gerenciar-agendamentos" class="min-h-screen bg-gray-50 p-6">
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6">Gerenciar Agendamentos</h2>
+            <div class="space-y-4">
+                <div class="border p-4 rounded">
+                    <p><strong>Cliente:</strong> João Silva</p>
+                    <p><strong>Serviço:</strong> Corte de Cabelo</p>
+                    <p><strong>Data:</strong> 15/04/2025, 10:00</p>
+                    <button class="bg-green-600 text-white p-2 rounded hover:bg-green-700">Confirmar</button>
+                    <button class="bg-red-600 text-white p-2 rounded hover:bg-red-700">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Confirmação de Agendamento (Usuário) -->
+    <section id="confirmacao" class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6">Agendamento Confirmado</h2>
+            <div class="space-y-4">
+                <p><strong>Empresa:</strong> Salão Beleza Total</p>
+                <p><strong>Serviço:</strong> Corte de Cabelo</p>
+                <p><strong>Data:</strong> 15/04/2025, 10:00</p>
+                <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Adicionar ao Calendário</button>
+                <button class="w-full bg-gray-600 text-white p-3 rounded hover:bg-gray-700">Ver Detalhes</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

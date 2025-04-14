@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Cadastro de Empresa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-2xl font-bold mb-6">Cadastro de Empresa</h2>
+        <form class="space-y-4">
+            <input type="text" placeholder="Nome da Empresa" class="w-full p-3 border rounded">
+            <input type="text" placeholder="CNPJ" class="w-full p-3 border rounded">
+            <input type="text" placeholder="Endereço" class="w-full p-3 border rounded">
+            <input type="tel" placeholder="Telefone" class="w-full p-3 border rounded">
+            <input type="email" placeholder="E-mail" class="w-full p-3 border rounded">
+            <textarea placeholder="Descrição" class="w-full p-3 border rounded"></textarea>
+            <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Enviar para Validação</button>
+        </form>
+        <p class="text-sm text-gray-600 mt-4">Seu cadastro será revisado em até 48 horas.</p>
+    </div>
+</body>
+</html>
