@@ -1,9 +1,4 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -17,23 +12,27 @@
             justify-content: center;
             margin: 2rem 0;
         }
-        .mermaid svg .node rect {
-            fill: #e6f3ff;
-            stroke: #2563eb;
-            stroke-width: 2px;
-            cursor: pointer;
-        }
-        .mermaid svg .node text {
-            fill: #1e40af;
-            font-weight: 500;
-        }
-        .mermaid svg .node:hover rect {
-            fill: #bfdbfe;
-        }
-        .mermaid svg .edgePath path {
-            stroke: #4b5563;
-            stroke-width: 2px;
-        }
+
+            .mermaid svg .node rect {
+                fill: #e6f3ff;
+                stroke: #2563eb;
+                stroke-width: 2px;
+                cursor: pointer;
+            }
+
+            .mermaid svg .node text {
+                fill: #1e40af;
+                font-weight: 500;
+            }
+
+            .mermaid svg .node:hover rect {
+                fill: #bfdbfe;
+            }
+
+            .mermaid svg .edgePath path {
+                stroke: #4b5563;
+                stroke-width: 2px;
+            }
     </style>
 </head>
 <body class="min-h-screen bg-gray-100 flex flex-col items-center p-6">
@@ -44,23 +43,26 @@
 
     <div class="mermaid w-full max-w-5xl">
         graph TD
-            A[Login/Cadastro] -->|Usuário| B[Busca de Serviços]
-            A -->|Empresa| C[Cadastro de Empresa]
-            C --> D{Validação pela Equipe}
-            D -->|Aprovado| E[Configurar Serviços]
-            D -->|Rejeitado| F[Notificação de Rejeição]
-            B --> G[Agendamento]
-            G --> H[Gerenciar Agendamentos]
-            H -->|Confirmado pela Empresa| I[Confirmação]
-            H -->|Rejeitado| J[Notificação ao Usuário]
+        A[Login/Cadastro] -->|Novo Usuário| B[Cadastro de Usuário]
+        A -->|Usuário Cadastrado| C[Busca de Serviços]
+        A -->|Empresa| D[Cadastro de Empresa]
+        D --> E{Validação pela Equipe}
+        E -->|Aprovado| F[Configurar Serviços]
+        E -->|Rejeitado| G[Notificação de Rejeição]
+        B --> C
+        C --> H[Agendamento]
+        H --> I[Gerenciar Agendamentos]
+        I -->|Confirmado pela Empresa| J[Confirmação]
+        I -->|Rejeitado| K[Notificação ao Usuário]
 
-            click A "login.html" "Acessar Tela de Login/Cadastro"
-            click B "busca-servicos.html" "Acessar Tela de Busca de Serviços"
-            click C "cadastro-empresa.html" "Acessar Tela de Cadastro de Empresa"
-            click E "servicos-empresa.html" "Acessar Tela de Configuração de Serviços"
-            click G "agendamento.html" "Acessar Tela de Agendamento"
-            click H "gerenciar-agendamentos.html" "Acessar Tela de Gerenciamento de Agendamentos"
-            click I "confirmacao.html" "Acessar Tela de Confirmação"
+        click A "login.html" "Acessar Tela de Login/Cadastro"
+        click B "cadastro-usuario.html" "Acessar Tela de Cadastro de Usuário"
+        click C "busca-servicos.html" "Acessar Tela de Busca de Serviços"
+        click D "cadastro-empresa.html" "Acessar Tela de Cadastro de Empresa"
+        click F "servicos-empresa.html" "Acessar Tela de Configuração de Serviços"
+        click H "agendamento.html" "Acessar Tela de Agendamento"
+        click I "gerenciar-agendamentos.html" "Acessar Tela de Gerenciamento de Agendamentos"
+        click J "confirmacao.html" "Acessar Tela de Confirmação"
     </div>
 
     <script>
@@ -82,6 +84,7 @@
                     const label = node.querySelector('text').textContent.trim();
                     const links = {
                         'Login/Cadastro': 'login.html',
+                        'Cadastro de Usuário': 'cadastro-usuario.html',
                         'Busca de Serviços': 'busca-servicos.html',
                         'Cadastro de Empresa': 'cadastro-empresa.html',
                         'Configurar Serviços': 'servicos-empresa.html',
