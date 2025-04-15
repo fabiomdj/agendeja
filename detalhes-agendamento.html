@@ -1,0 +1,86 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Detalhes do Agendamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center">Detalhes do Agendamento</h2>
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Informações do Cliente</h3>
+            <p><strong>Nome:</strong> <span id="client">Carregando...</span></p>
+            <p><strong>E-mail:</strong> <span id="clientEmail">Carregando...</span></p>
+            <p><strong>Telefone:</strong> <span id="clientPhone">Carregando...</span></p>
+            <h3 class="text-lg font-semibold">Informações do Serviço</h3>
+            <p><strong>Serviço:</strong> <span id="service">Carregando...</span></p>
+            <p><strong>Duração:</strong> <span id="duration">Carregando...</span></p>
+            <p><strong>Preço:</strong> <span id="price">Carregando...</span></p>
+            <p><strong>Data:</strong> <span id="date">Carregando...</span></p>
+            <p><strong>Horário:</strong> <span id="time">Carregando...</span></p>
+            <p><strong>Status:</strong> <span id="status">Carregando...</span></p>
+        </div>
+        <div class="mt-6 flex justify-end space-x-2">
+            <button id="confirmButton" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 hidden">Confirmar</button>
+            <button id="cancelButton" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 hidden">Cancelar</button>
+            <button id="backButton" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const client = params.get('client') || 'Desconhecido';
+            const clientEmail = params.get('clientEmail') || 'N/A';
+            const clientPhone = params.get('clientPhone') || 'N/A';
+            const service = params.get('service') || 'Desconhecido';
+            const duration = params.get('duration') || 'N/A';
+            const price = params.get('price') || 'N/A';
+            const date = params.get('date') || 'N/A';
+            const time = params.get('time') || 'N/A';
+            const status = params.get('status') || 'Desconhecido';
+
+            document.getElementById('client').textContent = client;
+            document.getElementById('clientEmail').textContent = clientEmail;
+            document.getElementById('clientPhone').textContent = clientPhone;
+            document.getElementById('service').textContent = service;
+            document.getElementById('duration').textContent = duration;
+            document.getElementById('price').textContent = price;
+            document.getElementById('date').textContent = date;
+            document.getElementById('time').textContent = time;
+            document.getElementById('status').textContent = status;
+
+            const confirmButton = document.getElementById('confirmButton');
+            const cancelButton = document.getElementById('cancelButton');
+            const backButton = document.getElementById('backButton');
+
+            if (status === 'Pendente') {
+                confirmButton.classList.remove('hidden');
+                cancelButton.classList.remove('hidden');
+            }
+
+            confirmButton.addEventListener('click', () => {
+                alert('Agendamento confirmado com sucesso!');
+                window.location.href = 'gerenciar-agendamentos.html';
+            });
+
+            cancelButton.addEventListener('click', () => {
+                alert('Agendamento cancelado.');
+                window.location.href = 'gerenciar-agendamentos.html';
+            });
+
+            backButton.addEventListener('click', () => {
+                window.location.href = 'gerenciar-agendamentos.html';
+            });
+        });
+    </script>
+</body>
+</html>
