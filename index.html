@@ -43,26 +43,39 @@
 
     <div class="mermaid w-full max-w-5xl">
         graph TD
-        A[Login/Cadastro] -->|Novo Usuário| B[Cadastro de Usuário]
-        A -->|Usuário Cadastrado| C[Busca de Serviços]
-        A -->|Empresa| D[Cadastro de Empresa]
-        D --> E{Validação pela Equipe}
-        E -->|Aprovado| F[Configurar Serviços]
-        E -->|Rejeitado| G[Notificação de Rejeição]
-        B --> C
-        C --> H[Agendamento]
-        H --> I[Gerenciar Agendamentos]
-        I -->|Confirmado pela Empresa| J[Confirmação]
-        I -->|Rejeitado| K[Notificação ao Usuário]
+        LOG[Login]
+        LOG -->USU[Usuário]
+        LOG -->EMP[Empresa]
+        CAD[Cadastrar]
+        CAD -->EMP2[Empresa]
+        CAD -->USU2[Usuario]
+        USU2 --> LOG
+        USU -->MA[Meus Agendamentos]
+        USU -->BS[Buscar Serviços]
+        BS -->AG[Agendamento]
+        AG -->CN1[Confirmação]
 
-        click A "login.html" "Acessar Tela de Login/Cadastro"
-        click B "cadastro-usuario.html" "Acessar Tela de Cadastro de Usuário"
-        click C "busca-servicos.html" "Acessar Tela de Busca de Serviços"
-        click D "cadastro-empresa.html" "Acessar Tela de Cadastro de Empresa"
-        click F "servicos-empresa.html" "Acessar Tela de Configuração de Serviços"
-        click H "agendamento.html" "Acessar Tela de Agendamento"
-        click I "gerenciar-agendamentos.html" "Acessar Tela de Gerenciamento de Agendamentos"
-        click J "confirmacao.html" "Acessar Tela de Confirmação"
+        EMP -->CS[Configurar Serviços]
+        EMP -->GA[Gerenciar Agendamentos]
+        GA --> CN[Confirmar]
+        CN --> NT1[Notificar Usuário]
+
+        EMP2 -->VAL[Validação Equipe]
+        VAL -->|Reprovado| NT2[Notificar Empresa]
+        VAL -->|Aprovado| LOG
+
+
+        click LOG "login.html" "Acessar Tela de Login/Cadastro"
+        click USU2 "cadastro-usuario.html" "Cadastro de usuário"
+        click MA "meus-agendamentos.html" "Agendamentos do usuário"
+        click BS "busca-servicos.html" "Acessar Tela de Busca de Serviços"
+        click EMP2 "cadastro-empresa.html" "Acessar Tela de Cadastro de Empresa"
+        click CS "servicos-empresa.html" "Acessar Tela de Configuração de Serviços"
+        click AG "agendamento.html" "Acessar Tela de Agendamento"
+        click GA "gerenciar-agendamentos.html" "Acessar Tela de Gerenciamento de Agendamentos"
+        click CN "confirmar.html" "Acessar Tela de Confirmação"
+        click AG "agendamento.html" "Acessar Tela de Confirmação"
+        click CN1 "confirmacao.html" "Acessar Tela de Confirmação"
     </div>
 
     <script>
@@ -84,7 +97,6 @@
                     const label = node.querySelector('text').textContent.trim();
                     const links = {
                         'Login/Cadastro': 'login.html',
-                        'Cadastro de Usuário': 'cadastro-usuario.html',
                         'Busca de Serviços': 'busca-servicos.html',
                         'Cadastro de Empresa': 'cadastro-empresa.html',
                         'Configurar Serviços': 'servicos-empresa.html',

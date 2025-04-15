@@ -1,9 +1,4 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -14,16 +9,17 @@
 <body class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6">Agendar Serviço</h2>
-        <form class="space-y-4" onsubmit="event.preventDefault(); window.location.href='gerenciar-agendamentos.html';">
+        <form class="space-y-4" onsubmit="event.preventDefault(); window.location.href='meus-agendamentos.html';">
             <p><strong>Empresa:</strong> <span id="empresa">Carregando...</span></p>
             <p><strong>Serviço:</strong> <span id="servico">Carregando...</span></p>
             <div>
                 <label for="data" class="block text-sm font-medium text-gray-700">Data</label>
-                <input type="date" id="data" class="w-full p-3 border rounded mt-1" required>
+                <input type="date" id="data" min="2025-04-15" class="w-full p-3 border rounded mt-1" required>
             </div>
             <div>
                 <label for="horario" class="block text-sm font-medium text-gray-700">Horário</label>
                 <select id="horario" class="w-full p-3 border rounded mt-1" required>
+                    <option value="09:00">09:00</option>
                     <option value="10:00">10:00</option>
                     <option value="11:00">11:00</option>
                     <option value="14:00">14:00</option>

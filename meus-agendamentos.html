@@ -1,0 +1,111 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Meus Agendamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center">Meus Agendamentos</h2>
+        <div class="space-y-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Em Aberto</h3>
+                <div id="agendamentos-abertos" class="space-y-4"></div>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Finalizados</h3>
+                <div id="agendamentos-finalizados" class="space-y-4"></div>
+            </div>
+        </div>
+        <div class="mt-6">
+            <button onclick="window.location.href='busca-servicos.html'" class="w-full bg-gray-600 text-white p-3 rounded hover:bg-gray-700">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        const agendamentos = [
+            {
+                id: '1',
+                empresa: 'Salão Beleza Total',
+                servico: 'Corte de Cabelo',
+                data: '2025-04-16',
+                horario: '10:00',
+                status: 'Pendente',
+                preco: 'R$ 50,00',
+                descricao: 'Corte masculino ou feminino, com lavagem inclusa.',
+            },
+            {
+                id: '2',
+                empresa: 'Salão Beleza Total',
+                servico: 'Manicure',
+                data: '2025-04-17',
+                horario: '14:00',
+                status: 'Confirmado',
+                preco: 'R$ 30,00',
+                descricao: 'Esmaltação e cuidado com as unhas.',
+            },
+            {
+                id: '3',
+                empresa: 'Clínica Saúde Viva',
+                servico: 'Consulta Geral',
+                data: '2025-04-10',
+                horario: '09:00',
+                status: 'Confirmado',
+                preco: 'R$ 100,00',
+                descricao: 'Avaliação médica completa.',
+            },
+            {
+                id: '4',
+                empresa: 'Studio Cabelo & Arte',
+                servico: 'Tintura',
+                data: '2025-04-18',
+                horario: '11:00',
+                status: 'Pendente',
+                preco: 'R$ 130,00',
+                descricao: 'Tintura com técnicas modernas.',
+            },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const abertosDiv = document.getElementById('agendamentos-abertos');
+            const finalizadosDiv = document.getElementById('agendamentos-finalizados');
+            const hoje = new Date('2025-04-15');
+
+            agendamentos.forEach(agendamento => {
+                const dataAgendamento = new Date(agendamento.data);
+                const isAberto = dataAgendamento >= hoje && (agendamento.status === 'Pendente' || agendamento.status === 'Confirmado');
+                const targetDiv = isAberto ? abertosDiv : finalizadosDiv;
+
+                const card = document.createElement('div');
+                card.className = `border p-4 rounded-lg hover:shadow-md transition ${agendamento.status === 'Pendente' ? 'border-yellow-400' : 'border-green-400'}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold">${agendamento.empresa}</h4>
+                            <p class="text-sm">${agendamento.servico}</p>
+                            <p class="text-sm text-gray-600">${agendamento.data.split('-').reverse().join('/')} às ${agendamento.horario}</p>
+                            <p class="text-sm font-medium ${agendamento.status === 'Pendente' ? 'text-yellow-600' : 'text-green-600'}">${agendamento.status}</p>
+                        </div>
+                        <button onclick="window.location.href='detalhes-agendamento-usuario.html?id=${agendamento.id}&empresa=${encodeURIComponent(agendamento.empresa)}&servico=${encodeURIComponent(agendamento.servico)}&data=${agendamento.data}&horario=${agendamento.horario}&status=${agendamento.status}&preco=${encodeURIComponent(agendamento.preco)}&descricao=${encodeURIComponent(agendamento.descricao)}'" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Detalhes</button>
+                    </div>
+                `;
+                targetDiv.appendChild(card);
+            });
+
+            if (abertosDiv.children.length === 0) {
+                abertosDiv.innerHTML = '<p class="text-gray-600">Nenhum agendamento em aberto.</p>';
+            }
+            if (finalizadosDiv.children.length === 0) {
+                finalizadosDiv.innerHTML = '<p class="text-gray-600">Nenhum agendamento finalizado.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

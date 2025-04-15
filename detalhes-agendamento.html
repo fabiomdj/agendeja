@@ -1,9 +1,4 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -21,6 +16,7 @@
             <p><strong>Telefone:</strong> <span id="clientPhone">Carregando...</span></p>
             <h3 class="text-lg font-semibold">Informações do Serviço</h3>
             <p><strong>Serviço:</strong> <span id="service">Carregando...</span></p>
+            <p><strong>Descrição:</strong> <span id="description">Carregando...</span></p>
             <p><strong>Duração:</strong> <span id="duration">Carregando...</span></p>
             <p><strong>Preço:</strong> <span id="price">Carregando...</span></p>
             <p><strong>Data:</strong> <span id="date">Carregando...</span></p>
@@ -42,6 +38,7 @@
             const clientEmail = params.get('clientEmail') || 'N/A';
             const clientPhone = params.get('clientPhone') || 'N/A';
             const service = params.get('service') || 'Desconhecido';
+            const description = params.get('description') || 'N/A';
             const duration = params.get('duration') || 'N/A';
             const price = params.get('price') || 'N/A';
             const date = params.get('date') || 'N/A';
@@ -52,6 +49,7 @@
             document.getElementById('clientEmail').textContent = clientEmail;
             document.getElementById('clientPhone').textContent = clientPhone;
             document.getElementById('service').textContent = service;
+            document.getElementById('description').textContent = description;
             document.getElementById('duration').textContent = duration;
             document.getElementById('price').textContent = price;
             document.getElementById('date').textContent = date;

@@ -1,9 +1,4 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -78,12 +73,12 @@
                 const card = document.createElement('div');
                 card.className = 'border p-4 rounded-lg hover:shadow-md transition';
                 card.innerHTML = `
-                    <h3 class="font-bold">${servico.name}</h3>
-                    <p class="text-sm text-gray-600">Duração: ${servico.duration}</p>
-                    <p class="text-sm text-gray-600">Preço: ${servico.price}</p>
-                    <p class="text-sm">${servico.description}</p>
-                    <button onclick="window.location.href='agendamento.html?empresa=${encodeURIComponent(empresaNome)}&servico=${encodeURIComponent(servico.name)}'" class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Agendar</button>
-                `;
+                        <h3 class="font-bold">${servico.name}</h3>
+                        <p class="text-sm text-gray-600">Duração: ${servico.duration}</p>
+                        <p class="text-sm text-gray-600">Preço: ${servico.price}</p>
+                        <p class="text-sm">${servico.description}</p>
+                        <button onclick="window.location.href='agendamento.html?empresa=${encodeURIComponent(empresaNome)}&servico=${encodeURIComponent(servico.name)}'" class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Agendar</button>
+                    `;
                 lista.appendChild(card);
             });
         });

@@ -1,29 +1,58 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!-- login.html -->
-<xaiArtifact artifact_id="9788bd85-bd91-4b26-ae17-6478d50ce3b3" artifact_version_id="da7721fb-d567-4590-8c74-4664b74eb73c" title="login.html" contentType="text/html">
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgendeJá - Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-400">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 class="text-3xl font-bold text-center mb-6">AgendeJá</h1>
-        <div class="space-y-4">
-            <input type="email" placeholder="E-mail" class="w-full p-3 border rounded">
-            <input type="password" placeholder="Senha" class="w-full p-3 border rounded">
-            <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Entrar como Usuário</button>
-            <button class="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700">Entrar como Empresa</button>
-            <a href="cadastro-usuario.html" class="block text-center text-blue-600 hover:underline">Cadastrar Usuário</a>
-            <a href="cadastro-empresa.html" class="block text-center text-blue-600 hover:underline">Cadastrar Empresa</a>
+<!-- login.html -->
+<xaiArtifact artifact_id="7fbbb0ae-181d-4a03-9304-76fe631d1b83" artifact_version_id="05384b44-8023-4285-b239-4333d050ffa5" title="login.html" contentType="text/html">
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AgendeJá - Login</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+                    <input type="email" id="email" placeholder="seu.email@exemplo.com" class="w-full p-3 border rounded mt-1 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <input type="password" id="senha" placeholder="Sua senha" class="w-full p-3 border rounded mt-1 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <button onclick="loginUsuario()" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition">Entrar como Usuário</button>
+                <button onclick="loginEmpresa()" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition">Entrar como Empresa</button>
+            </div>
+            <div class="mt-4 text-sm text-gray-600 text-center">
+                <p>Não tem uma conta? <a href="cadastro-usuario.html" class="text-blue-600 hover:underline">Cadastre-se como usuário</a>.</p>
+                <p>Ou <a href="cadastro-empresa.html" class="text-blue-600 hover:underline">cadastre sua empresa</a>.</p>
+            </div>
         </div>
-    </div>
-</body>
+
+        <script>
+            function loginUsuario() {
+                const email = document.getElementById('email').value;
+                const senha = document.getElementById('senha').value;
+
+                if (!email || !senha) {
+                    alert('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+                window.location.href = 'busca-servicos.html';
+            }
+
+            function loginEmpresa() {
+                const email = document.getElementById('email').value;
+                const senha = document.getElementById('senha').value;
+
+                if (!email || !senha) {
+                    alert('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+                window.location.href = 'gerenciar-agendamentos.html';
+            }
+        </script>
+    </body>
 </html>
