@@ -1,146 +1,150 @@
-<script type="text/javascript">
-    var gk_fileData = {};
-    function loadFileData(filename) {
-      return gk_fileData[filename] || "";
-    }
-    </script><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgendeJá - Gerenciar Agendamentos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <style>
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .fc {
-            background-color: white;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .fc-event {
-            cursor: pointer;
-        }
-        @media (max-width: 640px) {
+<!-- gerenciar-agendamentos.html -->
+<xaiArtifact artifact_id="bdd7a16b-f8d9-4fc4-a4d4-33359456f94b" artifact_version_id="366a4dc3-f437-43f6-a3ca-9d867f1aaf24" title="gerenciar-agendamentos.html" contentType="text/html">
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AgendeJá - Gerenciar Agendamentos</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+        <style>
             #calendar {
-                padding: 0.5rem;
+                max-width: 900px;
+                margin: 0 auto;
             }
-            .fc .fc-toolbar {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-    </style>
-</head>
-<body class="min-h-screen bg-gray-50 p-6">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold mb-6 text-center">Gerenciar Agendamentos - Salão Beleza Total</h2>
-        <div id="calendar"></div>
-    </div>
 
-    <!-- Modal para detalhes do agendamento -->
-    <div id="eventModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-            <h3 class="text-lg font-bold mb-4">Detalhes do Agendamento</h3>
-            <div id="eventDetails" class="space-y-2"></div>
-            <div class="mt-4 flex justify-end space-x-2">
-                <button id="confirmButton" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 hidden">Confirmar</button>
-                <button id="cancelButton" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 hidden">Cancelar</button>
-                <button id="closeModal" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Fechar</button>
-            </div>
+            .fc {
+                background-color: white;
+                border-radius: 0.5rem;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .fc-event {
+                cursor: pointer;
+            }
+
+            @media (max-width: 640px) {
+                #calendar {
+                    padding: 0.5rem;
+                }
+
+                .fc .fc-toolbar {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body class="min-h-screen bg-gray-50 p-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center">Gerenciar Agendamentos - Salão Beleza Total</h2>
+            <div id="calendar"></div>
         </div>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const calendarEl = document.getElementById('calendar');
-            const eventModal = document.getElementById('eventModal');
-            const eventDetails = document.getElementById('eventDetails');
-            const confirmButton = document.getElementById('confirmButton');
-            const cancelButton = document.getElementById('cancelButton');
-            const closeModal = document.getElementById('closeModal');
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: [
-                    {
-                        id: '1',
-                        title: 'João Silva - Corte de Cabelo (Pendente)',
-                        start: '2025-04-16T10:00:00',
-                        end: '2025-04-16T10:30:00',
-                        extendedProps: {
-                            client: 'João Silva',
-                            service: 'Corte de Cabelo',
-                            status: 'Pendente',
-                            price: 'R$ 50,00',
-                        },
-                        backgroundColor: '#facc15', // Amarelo para pendente
-                        borderColor: '#ca8a04',
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const calendarEl = document.getElementById('calendar');
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                    {
-                        id: '2',
-                        title: 'Maria Souza - Manicure (Confirmado)',
-                        start: '2025-04-17T14:00:00',
-                        end: '2025-04-17T14:45:00',
-                        extendedProps: {
-                            client: 'Maria Souza',
-                            service: 'Manicure',
-                            status: 'Confirmado',
-                            price: 'R$ 30,00',
+                    events: [
+                        {
+                            id: '1',
+                            title: 'João Silva - Corte de Cabelo (Pendente)',
+                            start: '2025-04-16T10:00:00',
+                            end: '2025-04-16T10:30:00',
+                            extendedProps: {
+                                client: 'João Silva',
+                                clientEmail: 'joao.silva@email.com',
+                                clientPhone: '(11) 98765-4321',
+                                service: 'Corte de Cabelo',
+                                duration: '30 min',
+                                price: 'R$ 50,00',
+                                status: 'Pendente',
+                            },
+                            backgroundColor: '#facc15', // Amarelo para pendente
+                            borderColor: '#ca8a04',
                         },
-                        backgroundColor: '#16a34a', // Verde para confirmado
-                        borderColor: '#15803d',
+                        {
+                            id: '2',
+                            title: 'Maria Souza - Manicure (Confirmado)',
+                            start: '2025-04-17T14:00:00',
+                            end: '2025-04-17T14:45:00',
+                            extendedProps: {
+                                client: 'Maria Souza',
+                                clientEmail: 'maria.souza@email.com',
+                                clientPhone: '(11) 91234-5678',
+                                service: 'Manicure',
+                                duration: '45 min',
+                                price: 'R$ 30,00',
+                                status: 'Confirmado',
+                            },
+                            backgroundColor: '#16a34a', // Verde para confirmado
+                            borderColor: '#15803d',
+                        },
+                        {
+                            id: '3',
+                            title: 'Ana Pereira - Tintura (Pendente)',
+                            start: '2025-04-18T11:00:00',
+                            end: '2025-04-18T12:30:00',
+                            extendedProps: {
+                                client: 'Ana Pereira',
+                                clientEmail: 'ana.pereira@email.com',
+                                clientPhone: '(11) 99876-5432',
+                                service: 'Tintura',
+                                duration: '90 min',
+                                price: 'R$ 120,00',
+                                status: 'Pendente',
+                            },
+                            backgroundColor: '#facc15',
+                            borderColor: '#ca8a04',
+                        },
+                        {
+                            id: '4',
+                            title: 'Carlos Mendes - Corte de Cabelo (Confirmado)',
+                            start: '2025-04-19T15:00:00',
+                            end: '2025-04-19T15:30:00',
+                            extendedProps: {
+                                client: 'Carlos Mendes',
+                                clientEmail: 'carlos.mendes@email.com',
+                                clientPhone: '(11) 97654-3210',
+                                service: 'Corte de Cabelo',
+                                duration: '30 min',
+                                price: 'R$ 50,00',
+                                status: 'Confirmado',
+                            },
+                            backgroundColor: '#16a34a',
+                            borderColor: '#15803d',
+                        },
+                    ],
+                    eventClick: function (info) {
+                        const event = info.event;
+                        const queryParams = new URLSearchParams({
+                            id: event.id,
+                            client: event.extendedProps.client,
+                            clientEmail: event.extendedProps.clientEmail,
+                            clientPhone: event.extendedProps.clientPhone,
+                            service: event.extendedProps.service,
+                            duration: event.extendedProps.duration,
+                            price: event.extendedProps.price,
+                            status: event.extendedProps.status,
+                            date: event.start.toLocaleDateString('pt-BR'),
+                            time: event.start.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+                        });
+                        window.location.href = `detalhes-agendamento.html?${queryParams.toString()}`;
                     },
-                ],
-                eventClick: function (info) {
-                    const event = info.event;
-                    eventDetails.innerHTML = `
-                        <p><strong>Cliente:</strong> ${event.extendedProps.client}</p>
-                        <p><strong>Serviço:</strong> ${event.extendedProps.service}</p>
-                        <p><strong>Data:</strong> ${event.start.toLocaleDateString('pt-BR')}</p>
-                        <p><strong>Horário:</strong> ${event.start.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</p>
-                        <p><strong>Preço:</strong> ${event.extendedProps.price}</p>
-                        <p><strong>Status:</strong> ${event.extendedProps.status}</p>
-                    `;
-                    confirmButton.classList.toggle('hidden', event.extendedProps.status !== 'Pendente');
-                    cancelButton.classList.toggle('hidden', event.extendedProps.status !== 'Pendente');
+                    locale: 'pt-br',
+                    height: 'auto',
+                });
 
-                    confirmButton.onclick = function () {
-                        event.setExtendedProp('status', 'Confirmado');
-                        event.setProp('title', `${event.extendedProps.client} - ${event.extendedProps.service} (Confirmado)`);
-                        event.setProp('backgroundColor', '#16a34a');
-                        event.setProp('borderColor', '#15803d');
-                        alert('Agendamento confirmado com sucesso!');
-                        eventModal.classList.add('hidden');
-                    };
-
-                    cancelButton.onclick = function () {
-                        alert('Agendamento cancelado.');
-                        info.event.remove();
-                        eventModal.classList.add('hidden');
-                    };
-
-                    eventModal.classList.remove('hidden');
-                },
-                locale: 'pt-br',
-                height: 'auto',
+                calendar.render();
             });
-
-            calendar.render();
-
-            closeModal.addEventListener('click', () => {
-                eventModal.classList.add('hidden');
-            });
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
