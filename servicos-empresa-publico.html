@@ -1,0 +1,92 @@
+<script type="text/javascript">
+    var gk_fileData = {};
+    function loadFileData(filename) {
+      return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendeJá - Serviços da Empresa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-6" id="empresa-nome">Serviços</h2>
+        <div id="servicos-lista" class="space-y-4"></div>
+        <div class="mt-6">
+            <button onclick="window.location.href='busca-servicos.html'" class="bg-gray-600 text-white p-3 rounded hover:bg-gray-700">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        const companies = [
+            {
+                name: 'Salão Beleza Total',
+                services: [
+                    { name: 'Corte de Cabelo', duration: '30 min', price: 'R$ 50,00', description: 'Corte masculino ou feminino, com lavagem inclusa.' },
+                    { name: 'Manicure', duration: '45 min', price: 'R$ 30,00', description: 'Esmaltação e cuidado com as unhas.' },
+                    { name: 'Tintura', duration: '90 min', price: 'R$ 120,00', description: 'Coloração completa com produtos premium.' },
+                ],
+            },
+            {
+                name: 'Studio Cabelo & Arte',
+                services: [
+                    { name: 'Corte de Cabelo', duration: '40 min', price: 'R$ 60,00', description: 'Corte estilizado com consultoria.' },
+                    { name: 'Escova', duration: '60 min', price: 'R$ 40,00', description: 'Escova modelada para eventos.' },
+                    { name: 'Tintura', duration: '100 min', price: 'R$ 130,00', description: 'Tintura com técnicas modernas.' },
+                ],
+            },
+            {
+                name: 'Clínica Saúde Viva',
+                services: [
+                    { name: 'Consulta Geral', duration: '30 min', price: 'R$ 100,00', description: 'Avaliação médica completa.' },
+                    { name: 'Exames', duration: '60 min', price: 'R$ 200,00', description: 'Exames laboratoriais básicos.' },
+                ],
+            },
+            {
+                name: 'Barbearia Estilo',
+                services: [
+                    { name: 'Corte Masculino', duration: '30 min', price: 'R$ 35,00', description: 'Corte clássico ou moderno.' },
+                    { name: 'Barba', duration: '20 min', price: 'R$ 20,00', description: 'Aparagem e modelagem de barba.' },
+                ],
+            },
+            {
+                name: 'Consultório MedMais',
+                services: [
+                    { name: 'Consulta Especializada', duration: '45 min', price: 'R$ 150,00', description: 'Consulta com especialistas.' },
+                    { name: 'Fisioterapia', duration: '60 min', price: 'R$ 80,00', description: 'Sessão de reabilitação.' },
+                ],
+            },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const empresaNome = params.get('empresa') || 'Desconhecida';
+            const empresa = companies.find(c => c.name === empresaNome);
+
+            document.getElementById('empresa-nome').textContent = `Serviços - ${empresaNome}`;
+            const lista = document.getElementById('servicos-lista');
+
+            if (!empresa) {
+                lista.innerHTML = '<p class="text-gray-600">Empresa não encontrada.</p>';
+                return;
+            }
+
+            empresa.services.forEach(servico => {
+                const card = document.createElement('div');
+                card.className = 'border p-4 rounded-lg hover:shadow-md transition';
+                card.innerHTML = `
+                    <h3 class="font-bold">${servico.name}</h3>
+                    <p class="text-sm text-gray-600">Duração: ${servico.duration}</p>
+                    <p class="text-sm text-gray-600">Preço: ${servico.price}</p>
+                    <p class="text-sm">${servico.description}</p>
+                    <button onclick="window.location.href='agendamento.html?empresa=${encodeURIComponent(empresaNome)}&servico=${encodeURIComponent(servico.name)}'" class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Agendar</button>
+                `;
+                lista.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>

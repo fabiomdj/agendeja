@@ -14,16 +14,38 @@
 <body class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6">Agendar Serviço</h2>
-        <div class="space-y-4">
-            <p><strong>Serviço:</strong> Corte de Cabelo (R$ 50,00, 30 min)</p>
-            <input type="date" class="w-full p-3 border rounded">
-            <select class="w-full p-3 border rounded">
-                <option>10:00</option>
-                <option>11:00</option>
-                <option>14:00</option>
-            </select>
-            <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Confirmar Agendamento</button>
+        <form class="space-y-4" onsubmit="event.preventDefault(); window.location.href='gerenciar-agendamentos.html';">
+            <p><strong>Empresa:</strong> <span id="empresa">Carregando...</span></p>
+            <p><strong>Serviço:</strong> <span id="servico">Carregando...</span></p>
+            <div>
+                <label for="data" class="block text-sm font-medium text-gray-700">Data</label>
+                <input type="date" id="data" class="w-full p-3 border rounded mt-1" required>
+            </div>
+            <div>
+                <label for="horario" class="block text-sm font-medium text-gray-700">Horário</label>
+                <select id="horario" class="w-full p-3 border rounded mt-1" required>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Confirmar Agendamento</button>
+        </form>
+        <div class="mt-4">
+            <button onclick="window.location.href='servicos-empresa-publico.html?empresa=' + encodeURIComponent(document.getElementById('empresa').textContent)" class="w-full bg-gray-600 text-white p-3 rounded hover:bg-gray-700">Voltar</button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const empresa = params.get('empresa') || 'Desconhecida';
+            const servico = params.get('servico') || 'Desconhecido';
+
+            document.getElementById('empresa').textContent = empresa;
+            document.getElementById('servico').textContent = servico;
+        });
+    </script>
 </body>
 </html>
