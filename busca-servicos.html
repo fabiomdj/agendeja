@@ -13,13 +13,13 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh6qRi1i_i4hWePBgW-Zo9rAx4X417Nt0&callback=initMap" async defer></script>
     <style>
         #map {
-            height: 16rem; /* 64 in Tailwind units */
+            height: 16rem;
             width: 100%;
             border-radius: 0.5rem;
         }
         @media (min-width: 768px) {
             #map {
-                height: 24rem; /* 96 in Tailwind units */
+                height: 24rem;
             }
         }
     </style>
@@ -28,80 +28,160 @@
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">Buscar Serviços</h2>
-            <select class="w-full p-3 border rounded mb-4">
-                <option>Beleza</option>
-                <option>Saúde</option>
-                <option>Reparos</option>
+            <select id="category" class="w-full p-3 border rounded mb-4">
+                <option value="Beleza">Beleza</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Reparos">Reparos</option>
             </select>
             <input type="range" min="1" max="50" value="10" class="w-full mb-4" id="raio">
             <p class="text-sm text-gray-600">Raio: <span id="raio-valor">10</span> km</p>
             <div id="map"></div>
         </div>
-        <div class="space-y-4">
-            <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="font-bold">Salão Beleza Total</h3>
-                <p class="text-sm text-gray-600">2 km de distância</p>
-                <p>Serviços: Corte, Manicure, Tintura</p>
-                <button class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Ver Serviços</button>
-            </div>
-        </div>
+        <div id="results" class="space-y-4"></div>
     </div>
 
     <script>
-        let map;
+        let map, userLocation, markers = [], infoWindow;
+        const companies = [
+            {
+                name: 'Salão Beleza Total',
+                category: 'Beleza',
+                services: ['Corte de Cabelo', 'Manicure', 'Tintura'],
+                distance: 2,
+                latOffset: 0.02,
+                lngOffset: 0.01,
+            },
+            {
+                name: 'Studio Cabelo & Arte',
+                category: 'Beleza',
+                services: ['Corte de Cabelo', 'Escova', 'Tintura'],
+                distance: 5,
+                latOffset: 0.04,
+                lngOffset: -0.03,
+            },
+            {
+                name: 'Clínica Saúde Viva',
+                category: 'Saúde',
+                services: ['Consulta Geral', 'Exames'],
+                distance: 3,
+                latOffset: -0.015,
+                lngOffset: 0.02,
+            },
+            {
+                name: 'Barbearia Estilo',
+                category: 'Beleza',
+                services: ['Corte Masculino', 'Barba'],
+                distance: 8,
+                latOffset: 0.05,
+                lngOffset: 0.04,
+            },
+            {
+                name: 'Consultório MedMais',
+                category: 'Saúde',
+                services: ['Consulta Especializada', 'Fisioterapia'],
+                distance: 10,
+                latOffset: -0.03,
+                lngOffset: -0.05,
+            },
+        ];
 
         function initMap() {
-            // Coordenadas padrão (caso geolocalização falhe)
             const defaultLocation = { lat: -23.5505, lng: -46.6333 }; // São Paulo, SP
-
-            // Inicializa o mapa
-            map = new google.maps.Map(document.getElementById("map"), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 center: defaultLocation,
                 zoom: 12,
             });
+            infoWindow = new google.maps.InfoWindow();
 
-            // Tenta obter a localização do usuário
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        const userLocation = {
+                        userLocation = {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-
-                        // Centraliza o mapa na localização do usuário
                         map.setCenter(userLocation);
-
-                        // Adiciona um marcador para o usuário
                         new google.maps.Marker({
                             position: userLocation,
                             map: map,
-                            title: "Sua Localização",
-                            icon: {
-                                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                            },
+                            title: 'Sua Localização',
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                         });
-
-                        // Adiciona um marcador de exemplo para uma empresa fictícia
-                        new google.maps.Marker({
-                            position: { lat: userLocation.lat + 0.02, lng: userLocation.lng + 0.01 },
-                            map: map,
-                            title: "Salão Beleza Total",
-                        });
+                        updateCompanies();
                     },
                     () => {
-                        // Caso a geolocalização falhe, usa a localização padrão
-                        alert("Não foi possível obter sua localização. Usando localização padrão.");
+                        alert('Não foi possível obter sua localização. Usando localização padrão.');
+                        updateCompanies();
                     }
                 );
             } else {
-                alert("Seu navegador não suporta geolocalização.");
+                alert('Seu navegador não suporta geolocalização.');
+                updateCompanies();
             }
         }
 
-        // Atualiza o valor do raio em tempo real
-        document.getElementById("raio").addEventListener("input", function () {
-            document.getElementById("raio-valor").textContent = this.value;
+        function updateCompanies() {
+            const category = document.getElementById('category').value;
+            const raio = parseInt(document.getElementById('raio').value);
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            // Limpa marcadores existentes
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+
+            // Calcula zoom com base no raio
+            const zoomLevel = Math.round(15 - (raio / 50) * 7); // 1 km → zoom 15, 50 km → zoom 8
+            map.setZoom(zoomLevel);
+
+            companies
+                .filter(company => company.category === category && company.distance <= raio)
+                .forEach(company => {
+                    // Adiciona card na lista
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-4 rounded-lg shadow hover:shadow-md transition';
+                    card.innerHTML = `
+                        <h3 class="font-bold">${company.name}</h3>
+                        <p class="text-sm text-gray-600">${company.distance} km de distância</p>
+                        <p>Serviços: ${company.services.join(', ')}</p>
+                        <button class="mt-2 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Ver Serviços</button>
+                    `;
+                    results.appendChild(card);
+
+                    // Adiciona marcador no mapa
+                    const markerPosition = userLocation
+                        ? { lat: userLocation.lat + company.latOffset, lng: userLocation.lng + company.lngOffset }
+                        : { lat: -23.5505 + company.latOffset, lng: -46.6333 + company.lngOffset };
+                    const marker = new google.maps.Marker({
+                        position: markerPosition,
+                        map: map,
+                        title: company.name,
+                    });
+
+                    // InfoWindow ao passar o mouse
+                    marker.addListener('mouseover', () => {
+                        infoWindow.setContent(company.name);
+                        infoWindow.open(map, marker);
+                    });
+                    marker.addListener('mouseout', () => {
+                        infoWindow.close();
+                    });
+
+                    markers.push(marker);
+                });
+        }
+
+        document.getElementById('category').addEventListener('change', updateCompanies);
+        document.getElementById('raio').addEventListener('input', function () {
+            document.getElementById('raio-valor').textContent = this.value;
+            updateCompanies();
+        });
+
+        // Inicializa a lista e marcadores
+        window.addEventListener('load', () => {
+            if (typeof google !== 'undefined') {
+                updateCompanies();
+            }
         });
     </script>
 </body>
